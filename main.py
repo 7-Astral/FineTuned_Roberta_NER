@@ -50,7 +50,7 @@ input_text=st.text_input("Input: ",key="input")
 
 submit=st.button("Compute")
 
-@st.cache_resource
+@st.cache
 def classifier(text):
     # Use a pipeline as a high-level helper
     tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-large",add_prefix_space=True)
