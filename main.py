@@ -59,8 +59,6 @@ def classifier(text):
     return pipe(text)
 entities=[] 
 
-if input_text:
-    entities=classifier(input_text)
 
 entity_tag = {
  'B-eve':'EVE',
@@ -212,13 +210,11 @@ background-color:rgb(236 72 153);
 }}
 
 </style>
-
-<div class="fl">
-{"".join([f"<span class='tag_out {tag_out_styles[entity['entity']]}'>{entity['word']}<p class='tag_in {tag_in_styles[entity['entity']]}'>{entity_tag[entity['entity']]}</p></span>" for entity in entities])}
-</div>
 """
 
 if submit:
+    ot=classifier(input_text)
     st.markdown(f"<p style='color:#f3d8ba'>Given Input: {input_text}</p>",unsafe_allow_html=True)
     st.markdown(f"<p style='color:#f3d8ba'>Output:</p>",unsafe_allow_html=True)
-    st.markdown(custom_style_tag, unsafe_allow_html=True)
+    #st.markdown(custom_style_tag, unsafe_allow_html=True)
+    st.write(ot)
