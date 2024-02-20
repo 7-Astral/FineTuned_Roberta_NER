@@ -55,8 +55,11 @@ def classifier(text):
     # Use a pipeline as a high-level helper
     tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-large",add_prefix_space=True)
     model = TFAutoModelForTokenClassification.from_pretrained("Astral7/roberta-large-finetuned-ner")
-    pipe = pipeline("token-classification", model=model,tokenizer=tokenizer )
-    return pipe(text)
+    inputs = tokenizer(text, return_tensors="tf")
+    logits = model(**inputs).logits
+    predicted_token_class_ids = tf.math.argmax(logits, axis=-1)
+    predicted_token_class = [model.config.id2label[t] for t in predicted_token_class_ids[0].numpy().tolist()]
+    return predicted_token_class
 entities=[] 
 
 
